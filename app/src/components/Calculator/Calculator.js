@@ -19,8 +19,11 @@ class Calculator extends Component {
     }
 
     setDisplay(num) {
-        let display = (this.state.display === '0') ? num : this.state.display + num;
-        this.setState({ display: (this.state.display.length < 13) ? display : this.state.display });
+        let display = (this.state.resetDisplay === true) ? num : (this.state.display === '0' ) ? num : this.state.display + num;
+        // if display is currently 0, set it to the number the user clicked on, else if operator is set to '' and resetDisplay is true
+        this.setState({ 
+            display: (this.state.display.length < 13) ? display : this.state.display 
+        });
     }
 
     setOperator(operator) {
@@ -31,13 +34,13 @@ class Calculator extends Component {
 
     calculate() {
         // if the operator has not been set (nothing to calculate)
-        if ( this.state.operator === '' ) {
-            return
+        if(this.state.operator === '') {
+            return;
         }
 
         let result;
         
-        switch ( this.state.operator ) {
+        switch(this.state.operator) {
             case '+':
                 result = this.state.temp + parseInt(this.state.display, 10);
                 break;
@@ -53,7 +56,20 @@ class Calculator extends Component {
             default:
                 break;
         }
-        this.setState({ display: String(result) });
+
+        this.setState({ 
+            display: String(result),
+            resetDisplay: true,
+            operator: ''
+        });
+
+    }
+
+    clearDisplay() {
+        this.setState({
+            display: '0',
+            operator: ''
+        });
     }
 
     render() {
@@ -67,7 +83,7 @@ class Calculator extends Component {
                   <span className="total"> {this.state.display} </span>
                 </div>
           
-                <div className="btn clear"></div>
+                <div className="btn clear" onClick={ ()=> { this.clearDisplay(); } }></div>
           
                 <div className="btn zero" onClick={ () => { this.setDisplay('0'); } }></div>
                 <div className="btn one" onClick={ () => { this.setDisplay('1'); } }></div>
