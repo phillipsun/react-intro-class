@@ -19,8 +19,8 @@ class Calculator extends Component {
     }
 
     setDisplay(num) {
-        let display = (this.state.resetDisplay === true) ? num : (this.state.display === '0' ) ? num : this.state.display + num;
-        // if display is currently 0, set it to the number the user clicked on, else if operator is set to '' and resetDisplay is true
+        let display = (this.state.resetDisplay === true || this.state.display === '0' ) ? num : this.state.display + num;
+        // check to see if resetDisplay is true or the display is the default value: '0'
         this.setState({ 
             display: (this.state.display.length < 13) ? display : this.state.display 
         });
