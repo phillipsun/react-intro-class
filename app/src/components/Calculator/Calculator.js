@@ -30,7 +30,7 @@ class Calculator extends Component {
     }
 
     calculate() {
-        // if the operator has not been set yet
+        // if the operator has not been set (nothing to calculate)
         if ( this.state.operator === '' ) {
             return
         }
